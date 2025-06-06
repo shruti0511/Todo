@@ -4,6 +4,7 @@ import express from 'express'
 import { connectDb } from './db/connectDB'
 import routes from './routes/routes'
 import { errorHandler } from './middleware/errorHandler'
+import setStatusCompleteJob from './cron/todoCompleteJob'
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
@@ -23,6 +24,7 @@ declare global {
 const app = express();
 app.use(express.json());
 app.use(cors())
+setStatusCompleteJob.start()
 
 app.use('/api', routes)
 app.use(errorHandler)
